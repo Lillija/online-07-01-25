@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+          div {
+            color: green;
+        }
+
+        .errors {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kalkulators</h1>
+    <input type="text" id="num1">
+    <input type="text" id="operator">
+    <input type="text" id="num2">
+    <button id="btn">Rēķināt</button>
+    <div id="output"></div>
+
+    <script>
+        const  num1Input = document.getElementById("num1");
+        const  operatorInput = document.getElementById("operator");
+        const  num2Input = document.getElementById("num2");
+        const  buttonInput = document.getElementById("btn");
+        const  outputContainer = document.getElementById("output");
+
+        buttonInput.addEventListener("click", handleClick);
+
+function handleClick() {
+    let num1Value = parseFloat(num1Input.value);
+    let num2Value = parseFloat(num2Input.value);
+    let operatorValue = operatorInput.value;
+
+    let errorsArray = validateUserInput(num1Value, num2Value, operatorValue);
+
+    if (errorsArray.length > 0) {
+        outputContainer.innerHTML = errorsArray.join("<br>");
+        return;
+    }
+
+    let result = calc(num1Value, num2Value, operatorValue);
+
+    outputContainer.innerHTML = result;
+}
+
+function calc(n1, n2, op) {
+    switch (op) {
+        case "+":
+            return n1 + n2;
+        case "-":
+            return n1 - n2;
+        case "*":
+            return n1 * n2;
+        case "/":
+            return n1 / n2;
+        default:
+            return "Kļūdaina darbība";
+    }
+}
+
+function validateUserInput(num1, num2, operator) {
+        let errors = [];
+        if (isNaN(num1)) {
+          errors.push("Pirmais skaitlis nav ievadīts");
+        }
+        if (isNaN(num2)) {
+          errors.push("Otrais skaitlis nav ievadīts");
+        }
+        if (!["+", "-", "*", "/"].includes(operator)) {
+          errors.push("Kļūdains operātors");
+        }
+
+        return errors;
+      }
+    </script>
+</body>
+</html>
